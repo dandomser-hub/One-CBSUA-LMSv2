@@ -11,7 +11,8 @@
     "test:db": "node --test tests/database.test.mjs",
     "test:ui": "vitest run",
     "check": "npm test && npm run build",
-    "seed:demo": "node scripts/seed-demo.mjs"
+    "seed:demo": "node scripts/seed-demo.mjs",
+    "repair:demo": "node scripts/seed-demo.mjs --reset-passwords"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

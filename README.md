@@ -23,7 +23,7 @@ For hosting, set the two public build variables, run `npm run build`, serve `dis
 
 Use a disposable project only. The seed script requires server-side environment variables `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `VLP_DEMO_PASSWORD` (12+ characters), and `VLP_ALLOW_DEMO_SEED=yes`. Supply them through your shell or secret manager, then run `npm run seed:demo`. Do not commit these values.
 
-The script creates `admin`, `faculty`, `student`, `student2`, `facilitator`, `employee`, `mooc`, and `multirole` accounts under `@vlpv2.test`, plus synthetic offerings and activities. Existing identities are reused without silently resetting passwords. On repeat runs, use the same configured password. Existing quiz attempts are preserved; an existing demo quiz is not rewritten. The prototype provides optional test-account shortcuts using the original shared demo password; see Appearance and test accounts below.
+The script creates `admin`, `faculty`, `student`, `student2`, `facilitator`, `employee`, `mooc`, and `multirole` accounts under `@vlpv2.test`, plus synthetic offerings and activities. Existing identities are reused without resetting passwords unless the explicit repair command is used. On repeat runs, use the same configured password. Existing quiz attempts are preserved; an existing demo quiz is not rewritten. The prototype provides optional test-account shortcuts using the original shared demo password; see Appearance and test accounts below.
 
 For a non-demo installation, provision the first scoped administrator through a trusted database/service-role operation. Subsequently, scoped administrators can call `assign_membership` and `assign_enrollment`; administrative screens for those operations remain future work.
 
@@ -80,3 +80,20 @@ code alone does not apply this database repair.
 
 The single theme dropdown defaults to Light when no valid preference is saved.
 Existing saved Light, Dark or System preferences remain respected.
+
+### Repairing test-user authentication
+
+In the connected disposable demo environment, provide server-side
+`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and
+`VLP_ALLOW_DEMO_SEED=yes`, then run `npm run repair:demo`.
+
+This command creates missing synthetic accounts, resets passwords and confirms
+email for the eight exact `@vlpv2.test` identities, verifies all eight through
+normal password login, and completes the role/data seed. It preserves user IDs.
+It does not reset other accounts. Apply the database migrations first.
+
+The default demo password is `Password123!` in both the seed and frontend.
+If customizing it, set `VLP_DEMO_PASSWORD` and `VITE_DEMO_PASSWORD` to the same
+value and rebuild the app. The VITE value is public and displayed on the landing
+page; never use a private or real user's password. Keep the service-role key
+server-side. Running a frontend build alone cannot repair Supabase Auth users.

@@ -82,7 +82,7 @@ it('authenticates a test account normally and reports rejected credentials', asy
       </MemoryRouter>
     </ThemeProvider>,
   )
-  fireEvent.click(screen.getByRole('button', { name: /Administrator All domains/ }))
+  fireEvent.click(screen.getByRole('button', { name: /Administrator admin@vlpv2.test/ }))
   await waitFor(() => expect(signIn).toHaveBeenCalledWith('admin@vlpv2.test', 'Password123!'))
   expect(await screen.findByText('Invalid login credentials')).toBeTruthy()
   expect((screen.getByLabelText('Email') as HTMLInputElement).value).toBe('admin@vlpv2.test')
@@ -109,4 +109,16 @@ it('defaults to Light when there is no saved preference', () => {
   expect((screen.getByRole('combobox', { name: 'Color theme' }) as HTMLSelectElement).value).toBe(
     'light',
   )
+})
+
+it('renders test-user cards with exactly two lines', () => {
+  render(
+    <ThemeProvider>
+      <MemoryRouter>
+        <LoginPage />
+      </MemoryRouter>
+    </ThemeProvider>,
+  )
+  const card = screen.getByRole('button', { name: /Administrator admin@vlpv2.test/ })
+  expect(card.querySelectorAll('span').length).toBe(2)
 })

@@ -15,7 +15,7 @@ const TEST_USERS = [
   ['Multi-Role', 'multirole', 'Faculty, Student & L&D'],
 ]
 const demoEnabled = import.meta.env.VITE_ENABLE_DEMO_LOGIN !== 'false'
-const demoPassword = 'Password123!'
+const demoPassword = import.meta.env.VITE_DEMO_PASSWORD || 'Password123!'
 
 export default function LoginPage() {
   const { signIn, signUp, session, loading } = useAuth()
@@ -147,23 +147,24 @@ export default function LoginPage() {
             </h2>
             <p className="mt-2 text-sm text-muted">
               Choose a seeded account to explore its assigned role. Shared test password:{' '}
-              <code className="text-foreground">Password123!</code>
+              <code className="text-foreground">{demoPassword}</code>
             </p>
             <p className="mt-1 text-sm text-muted">
               If your demo uses a different password, enter it in the sign-in form above.
             </p>
             <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {TEST_USERS.map(([role, account, domain]) => (
+              {TEST_USERS.map(([role, account]) => (
                 <button
                   type="button"
                   key={account}
                   disabled={busy}
                   onClick={() => demoLogin(account + '@vlpv2.test')}
-                  className="text-left rounded-xl border border-border bg-surface-alt p-4 hover:border-primary focus-visible:outline-offset-2 disabled:opacity-50"
+                  className="text-left rounded-xl border border-border bg-surface-alt px-3 py-2 hover:border-primary focus-visible:outline-offset-2 disabled:opacity-50"
                 >
                   <span className="block font-semibold text-link">{role}</span>
-                  <span className="block text-xs text-muted mt-1">{domain}</span>
-                  <span className="block text-sm mt-3 break-all">{account}@vlpv2.test</span>
+                  <span className="block text-xs text-muted mt-1 truncate">
+                    {account}@vlpv2.test
+                  </span>
                 </button>
               ))}
             </div>
