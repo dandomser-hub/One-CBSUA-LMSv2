@@ -41,7 +41,7 @@ export default function DashboardPage() {
           {items.length === 0 ? (
             <p>
               No courses yet.{' '}
-              <Link className="text-primary-600" to="/mooc">
+              <Link className="text-link" to="/mooc">
                 Browse the MOOC catalog
               </Link>
             </p>

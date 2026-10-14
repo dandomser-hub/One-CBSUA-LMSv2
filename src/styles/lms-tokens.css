@@ -1,0 +1,192 @@
+/* ==========================================================================
+   LMS design tokens: rice-field palette
+   Layer 1: primitives (raw scales, never change between themes)
+   Layer 2: semantic tokens (what components use; swapped per theme)
+
+   Theme switching:
+     <html data-theme="light">  forces light
+     <html data-theme="dark">   forces dark
+     no attribute               follows the OS setting
+   ========================================================================== */
+
+/* ---------- Layer 1: primitives ---------- */
+:root {
+  /* Grain-fill green (primary) */
+  --green-50: #f3f9ec;
+  --green-100: #e2f0d0;
+  --green-200: #c6e1a3;
+  --green-300: #a3cd72;
+  --green-400: #7fb645;
+  --green-500: #5f9b2c;
+  --green-600: #4a7d22;
+  --green-700: #3a611d;
+  --green-800: #2f4c1b;
+  --green-900: #1f3412;
+  --green-950: #121f0a;
+
+  /* Ripening gold (secondary) */
+  --gold-50: #fff9e5;
+  --gold-100: #fff0bf;
+  --gold-200: #ffe28a;
+  --gold-300: #ffd04d;
+  --gold-400: #f2b922;
+  --gold-500: #d99a0b;
+  --gold-600: #b07607;
+  --gold-700: #865808;
+  --gold-800: #5f3f0b;
+  --gold-900: #3a2d0a;
+
+  /* Supporting hues */
+  --water-500: #2f7fb5;
+  --water-300: #6bb3e0;
+  --leaf-500: #1f8f6b;
+  --leaf-300: #4cc49a;
+  --sun-500: #e07b1a;
+  --sun-300: #f5a04d;
+  --clay-500: #c8432f;
+  --clay-300: #f0806e;
+  --soil-500: #7a5230;
+  --soil-300: #c49a6c;
+
+  /* Warm olive neutrals */
+  --paper-50: #faf9f4;
+  --paper-100: #f2f1e8;
+  --paper-200: #dedccb;
+  --ink-900: #1c2417;
+  --ink-600: #5a6350;
+  --night-950: #10160d;
+  --night-900: #172012;
+  --night-800: #1f2a19;
+  --night-700: #2e3b27;
+  --mist-100: #eaf0e2;
+  --mist-400: #a3af96;
+}
+
+/* ---------- Layer 2: semantic tokens, light (default) ---------- */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: var(--paper-50);
+  --surface: #ffffff;
+  --surface-alt: var(--paper-100);
+  --border: var(--paper-200);
+
+  /* Text */
+  --text: var(--ink-900);
+  --text-muted: var(--ink-600);
+  --text-link: var(--green-700);
+
+  /* Primary (green) */
+  --primary: var(--green-600);
+  --primary-hover: var(--green-700);
+  --primary-subtle: var(--green-100);
+  --on-primary: #ffffff;
+
+  /* Accent (gold): dark text on gold fills, always */
+  --accent: var(--gold-400);
+  --accent-hover: var(--gold-500);
+  --accent-subtle: var(--gold-100);
+  --accent-text: var(--gold-700);
+  --on-accent: var(--ink-900);
+
+  /* Status */
+  --info: var(--water-500);
+  --info-bg: #e3f0f9;
+  --success: var(--leaf-500);
+  --success-bg: #ddf3ea;
+  --warning: var(--sun-500);
+  --warning-bg: #fcebd6;
+  --danger: var(--clay-500);
+  --danger-bg: #f9e1dc;
+
+  /* Optional tertiary */
+  --earth: var(--soil-500);
+
+  /* Interaction */
+  --focus-ring: var(--gold-500);
+  --progress-track: var(--green-100);
+  --progress-fill: var(--green-600);
+}
+
+/* ---------- Layer 2: semantic tokens, dark ---------- */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: var(--night-950);
+  --surface: var(--night-900);
+  --surface-alt: var(--night-800);
+  --border: var(--night-700);
+
+  --text: var(--mist-100);
+  --text-muted: var(--mist-400);
+  --text-link: var(--green-300);
+
+  --primary: var(--green-400);
+  --primary-hover: var(--green-300);
+  --primary-subtle: var(--green-800);
+  --on-primary: var(--night-950);
+
+  --accent: var(--gold-300);
+  --accent-hover: var(--gold-200);
+  --accent-subtle: var(--gold-900);
+  --accent-text: var(--gold-300);
+  --on-accent: var(--night-950);
+
+  --info: var(--water-300);
+  --info-bg: #14283a;
+  --success: var(--leaf-300);
+  --success-bg: #123428;
+  --warning: var(--sun-300);
+  --warning-bg: #3a2410;
+  --danger: var(--clay-300);
+  --danger-bg: #3a1914;
+
+  --earth: var(--soil-300);
+
+  --focus-ring: var(--gold-300);
+  --progress-track: var(--green-800);
+  --progress-fill: var(--green-400);
+}
+
+/* Same dark values when the OS prefers dark and no theme is forced */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    color-scheme: dark;
+
+    --bg: var(--night-950);
+    --surface: var(--night-900);
+    --surface-alt: var(--night-800);
+    --border: var(--night-700);
+
+    --text: var(--mist-100);
+    --text-muted: var(--mist-400);
+    --text-link: var(--green-300);
+
+    --primary: var(--green-400);
+    --primary-hover: var(--green-300);
+    --primary-subtle: var(--green-800);
+    --on-primary: var(--night-950);
+
+    --accent: var(--gold-300);
+    --accent-hover: var(--gold-200);
+    --accent-subtle: var(--gold-900);
+    --accent-text: var(--gold-300);
+    --on-accent: var(--night-950);
+
+    --info: var(--water-300);
+    --info-bg: #14283a;
+    --success: var(--leaf-300);
+    --success-bg: #123428;
+    --warning: var(--sun-300);
+    --warning-bg: #3a2410;
+    --danger: var(--clay-300);
+    --danger-bg: #3a1914;
+
+    --earth: var(--soil-300);
+
+    --focus-ring: var(--gold-300);
+    --progress-track: var(--green-800);
+    --progress-fill: var(--green-400);
+  }
+}

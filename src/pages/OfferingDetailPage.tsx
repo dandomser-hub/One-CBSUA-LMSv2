@@ -66,7 +66,7 @@ export default function OfferingDetailPage() {
   if (!offering) return <ErrorNotice message={error || 'Course unavailable.'} />
   return (
     <div className="space-y-4">
-      <Link to="/dashboard" className="text-primary-600">
+      <Link to="/dashboard" className="text-link">
         ← Dashboard
       </Link>
       <h1 className="text-2xl font-bold">{offering.title}</h1>

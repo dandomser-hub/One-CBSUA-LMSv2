@@ -23,7 +23,7 @@ For hosting, set the two public build variables, run `npm run build`, serve `dis
 
 Use a disposable project only. The seed script requires server-side environment variables `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `VLP_DEMO_PASSWORD` (12+ characters), and `VLP_ALLOW_DEMO_SEED=yes`. Supply them through your shell or secret manager, then run `npm run seed:demo`. Do not commit these values.
 
-The script creates `admin`, `faculty`, `student`, `student2`, `facilitator`, `employee`, `mooc`, and `multirole` accounts under `@vlpv2.test`, plus synthetic offerings and activities. Existing identities are reused without silently resetting passwords. On repeat runs, use the same configured password. Existing quiz attempts are preserved; an existing demo quiz is not rewritten. No shared password or automatic privileged login is shipped in the frontend.
+The script creates `admin`, `faculty`, `student`, `student2`, `facilitator`, `employee`, `mooc`, and `multirole` accounts under `@vlpv2.test`, plus synthetic offerings and activities. Existing identities are reused without silently resetting passwords. On repeat runs, use the same configured password. Existing quiz attempts are preserved; an existing demo quiz is not rewritten. The prototype provides optional test-account shortcuts using the original shared demo password; see Appearance and test accounts below.
 
 For a non-demo installation, provision the first scoped administrator through a trusted database/service-role operation. Subsequently, scoped administrators can call `assign_membership` and `assign_enrollment`; administrative screens for those operations remain future work.
 
@@ -51,3 +51,18 @@ The integration monitor is a read-only log viewer. No live Registrar/SIS, HRMIS,
 - [Source and Evidence Register](docs/02-source-and-evidence-register.md)
 - [Prototype documentation and supported workflows](docs/03-prototype-documentation.md)
 - [Error remediation and validation record](docs/04-prototype-error-remediation.md)
+
+## Appearance and test accounts
+
+The landing page and shared module header offer Light, Dark and System themes.
+The preference persists in local storage as `vlpv2:theme`; System follows device
+appearance automatically. The uploaded rice-field palette is preserved in
+`src/styles/lms-tokens.css` and exposed through `tailwind.lms-preset.js`.
+Accessibility overrides provide readable status text and visible light-mode focus rings.
+
+The prototype landing page lists the seeded role-based test accounts and signs in
+through Supabase using the original shared test password `Password123!`.
+Accounts must exist in the connected database; shortcuts do not create accounts
+or grant roles. If seeded with a different `VLP_DEMO_PASSWORD`, use the manual
+sign-in form. Set `VITE_ENABLE_DEMO_LOGIN=false` at build time to hide these
+synthetic account shortcuts for a live deployment.

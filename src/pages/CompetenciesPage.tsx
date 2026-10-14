@@ -77,7 +77,7 @@ export default function CompetenciesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-link" />
       </div>
     )
   }
@@ -86,8 +86,8 @@ export default function CompetenciesPage() {
     <div className="space-y-6">
       <ErrorNotice message={error || courseError} />
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Competencies</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold text-foreground">Competencies</h1>
+        <p className="text-sm text-muted mt-1">
           {canManage
             ? 'Track competency development across your L&D cohorts.'
             : 'Your competency progress in L&D programs.'}
@@ -103,8 +103,8 @@ export default function CompetenciesPage() {
               className="card text-left hover:shadow-md transition"
             >
               <span className="badge badge-lnd">L&D</span>
-              <h3 className="font-semibold text-gray-900 mt-2">{o.title}</h3>
-              <p className="text-sm text-gray-500 mt-1 line-clamp-2">{o.description}</p>
+              <h3 className="font-semibold text-foreground mt-2">{o.title}</h3>
+              <p className="text-sm text-muted mt-1 line-clamp-2">{o.description}</p>
             </button>
           ))}
         </div>
@@ -112,36 +112,36 @@ export default function CompetenciesPage() {
         <>
           <button
             onClick={() => setSelectedOffering(null)}
-            className="text-sm text-primary-600 hover:underline"
+            className="text-sm text-link hover:underline"
           >
             ← Back to programs
           </button>
 
           <div className="card">
-            <h3 className="font-semibold text-gray-800 mb-4">Competency Framework</h3>
+            <h3 className="font-semibold text-foreground mb-4">Competency Framework</h3>
             <div className="space-y-4">
               {competencies.map((comp) => {
                 const metCount = learnerComps.filter(
                   (lc) => lc.competency_id === comp.id && lc.is_met,
                 ).length
                 return (
-                  <div key={comp.id} className="border border-gray-100 rounded-lg p-4">
+                  <div key={comp.id} className="border border-border rounded-lg p-4">
                     <div className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <ShieldCheck className="w-5 h-5 text-success-text flex-shrink-0 mt-0.5" />
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900">{comp.name}</p>
-                        <p className="text-sm text-gray-500 mt-1">{comp.description}</p>
+                        <p className="font-medium text-foreground">{comp.name}</p>
+                        <p className="text-sm text-muted mt-1">{comp.description}</p>
                         {canManage && (
                           <div className="mt-3 flex items-center gap-2">
-                            <div className="flex-1 bg-gray-100 rounded-full h-2">
+                            <div className="flex-1 bg-surface-alt rounded-full h-2">
                               <div
-                                className="bg-success-500 h-2 rounded-full transition-all"
+                                className="bg-success h-2 rounded-full transition-all"
                                 style={{
                                   width: `${roster.length > 0 ? (metCount / roster.length) * 100 : 0}%`,
                                 }}
                               />
                             </div>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-muted">
                               {metCount}/{roster.length} met
                             </span>
                           </div>
@@ -156,16 +156,16 @@ export default function CompetenciesPage() {
 
           {!canManage && learnerComps.length > 0 && (
             <div className="card">
-              <h3 className="font-semibold text-gray-800 mb-4">Your Progress</h3>
+              <h3 className="font-semibold text-foreground mb-4">Your Progress</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {competencies.map((comp) => {
                   const lc = learnerComps.find((l) => l.competency_id === comp.id)
                   return (
                     <div
                       key={comp.id}
-                      className="flex items-center justify-between p-3 border border-gray-100 rounded-lg"
+                      className="flex items-center justify-between p-3 border border-border rounded-lg"
                     >
-                      <span className="text-sm font-medium text-gray-700">{comp.name}</span>
+                      <span className="text-sm font-medium text-foreground">{comp.name}</span>
                       {lc?.is_met ? (
                         <span className="badge badge-success">
                           <Award className="w-3 h-3 mr-1" /> Met

@@ -42,7 +42,7 @@ export default function QuizPage() {
   if (access.error) return <ErrorNotice message={access.error} />
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <Link to={`/offering/${quiz.offering_id}`} className="text-primary-600">
+      <Link to={`/offering/${quiz.offering_id}`} className="text-link">
         ← Back to course
       </Link>
       <h1 className="text-2xl font-bold">{quiz.title}</h1>
@@ -81,7 +81,7 @@ function LearnerQuiz({
         {engine.result.expired && (
           <p>The deadline passed. The server used the last answers saved before the deadline.</p>
         )}
-        <Link to="/gradebook" className="text-primary-600">
+        <Link to="/gradebook" className="text-link">
           View gradebook
         </Link>
       </div>
@@ -252,7 +252,7 @@ function InstructorQuiz({ quiz }: { quiz: Quiz }) {
           </section>
         ))
       )}
-      <Link className="text-primary-600" to="/gradebook">
+      <Link className="text-link" to="/gradebook">
         Release completed marks in Gradebook
       </Link>
     </>

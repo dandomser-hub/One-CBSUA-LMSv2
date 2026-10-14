@@ -60,28 +60,28 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
-      <div className="p-5 border-b border-gray-200">
+    <aside className="w-full md:w-64 md:shrink-0 bg-surface border-r border-border flex flex-col md:h-screen md:sticky top-0">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+            <GraduationCap className="w-6 h-6 text-primary-on" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-gray-900">One-CBSUA</h1>
-            <p className="text-xs text-gray-500">LMS v2 Prototype</p>
+            <h1 className="text-sm font-bold text-foreground">One-CBSUA VLP</h1>
+            <p className="text-xs text-muted">Virtual Learning Platform</p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 border-b border-gray-200">
-        <p className="text-xs font-medium text-gray-400 uppercase mb-2">Signed in as</p>
-        <p className="text-sm font-semibold text-gray-900">{profile?.display_name ?? 'User'}</p>
-        <p className="text-xs text-gray-500">{profile?.email}</p>
+      <div className="p-4 border-b border-border">
+        <p className="text-xs font-medium text-muted uppercase mb-2">Signed in as</p>
+        <p className="text-sm font-semibold text-foreground">{profile?.display_name ?? 'User'}</p>
+        <p className="text-xs text-muted">{profile?.email}</p>
       </div>
 
       {domains.length > 0 && (
-        <div className="p-4 border-b border-gray-200">
-          <p className="text-xs font-medium text-gray-400 uppercase mb-2">Active Domain</p>
+        <div className="p-4 border-b border-border">
+          <p className="text-xs font-medium text-muted uppercase mb-2">Active Domain</p>
           <div className="space-y-1">
             {domains.map((d) => (
               <button
@@ -89,8 +89,8 @@ export default function Sidebar() {
                 onClick={() => setActiveDomain(d)}
                 className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-sm transition ${
                   activeDomain === d
-                    ? 'bg-primary-50 text-primary-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-primary-subtle text-link font-medium'
+                    : 'text-muted hover:bg-surface-alt'
                 }`}
               >
                 <span>{DOMAIN_LABELS[d]}</span>
@@ -101,8 +101,8 @@ export default function Sidebar() {
               onClick={() => setActiveDomain(null)}
               className={`w-full text-left px-3 py-1.5 rounded-lg text-sm transition ${
                 activeDomain === null
-                  ? 'bg-primary-50 text-primary-700 font-medium'
-                  : 'text-gray-600 hover:bg-gray-50'
+                  ? 'bg-primary-subtle text-link font-medium'
+                  : 'text-muted hover:bg-surface-alt'
               }`}
             >
               All domains
@@ -121,8 +121,8 @@ export default function Sidebar() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition ${
                   isActive
-                    ? 'bg-primary-50 text-primary-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-primary-subtle text-link font-medium'
+                    : 'text-muted hover:bg-surface-alt'
                 }`
               }
             >
@@ -132,10 +132,10 @@ export default function Sidebar() {
           ))}
       </nav>
 
-      <div className="p-3 border-t border-gray-200">
+      <div className="p-3 border-t border-border">
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted hover:bg-surface-alt transition"
         >
           <LogOut className="w-5 h-5" />
           Sign Out

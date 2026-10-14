@@ -97,7 +97,7 @@ export default function AssignmentPage() {
   const closed = !!due && Date.now() > new Date(due).getTime() && !assignment.allow_late
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <Link to={`/offering/${assignment.offering_id}`} className="text-primary-600">
+      <Link to={`/offering/${assignment.offering_id}`} className="text-link">
         ← Back to course
       </Link>
       <h1 className="text-2xl font-bold">{assignment.title}</h1>

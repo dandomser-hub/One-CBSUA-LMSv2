@@ -1,0 +1,27 @@
+/* Semantic foreground refinements; the uploaded raw palette remains unchanged. */
+:root {
+  --info-text: #1e5d87;
+  --success-text: #146447;
+  --warning-text: var(--gold-700);
+  --danger-text: #9c3224;
+  --focus-ring: var(--green-700);
+  --control-border: var(--ink-600);
+}
+:root[data-theme='dark'] {
+  --info-text: var(--water-300);
+  --success-text: var(--leaf-300);
+  --warning-text: var(--sun-300);
+  --danger-text: var(--clay-300);
+  --focus-ring: var(--gold-300);
+  --control-border: var(--mist-400);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --info-text: var(--water-300);
+    --success-text: var(--leaf-300);
+    --warning-text: var(--sun-300);
+    --danger-text: var(--clay-300);
+    --focus-ring: var(--gold-300);
+    --control-border: var(--mist-400);
+  }
+}
