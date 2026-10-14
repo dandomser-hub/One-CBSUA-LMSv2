@@ -4,7 +4,7 @@ const {
   SUPABASE_URL,
   SUPABASE_SERVICE_ROLE_KEY,
   SUPABASE_ANON_KEY,
-  VLP_DEMO_PASSWORD = process.env.VITE_DEMO_PASSWORD || 'Password123!',
+  VLP_DEMO_PASSWORD = process.env.VITE_DEMO_PASSWORD || 'VLP-Demo-2026!',
   VLP_ALLOW_DEMO_SEED,
 } = process.env
 if (

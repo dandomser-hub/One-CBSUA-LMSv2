@@ -83,7 +83,7 @@ it('authenticates a test account normally and reports rejected credentials', asy
     </ThemeProvider>,
   )
   fireEvent.click(screen.getByRole('button', { name: /Administrator admin@vlpv2.test/ }))
-  await waitFor(() => expect(signIn).toHaveBeenCalledWith('admin@vlpv2.test', 'Password123!'))
+  await waitFor(() => expect(signIn).toHaveBeenCalledWith('admin@vlpv2.test', 'VLP-Demo-2026!'))
   expect(await screen.findByText('Invalid login credentials')).toBeTruthy()
   expect((screen.getByLabelText('Email') as HTMLInputElement).value).toBe('admin@vlpv2.test')
 })

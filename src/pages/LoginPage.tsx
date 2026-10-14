@@ -15,7 +15,7 @@ const TEST_USERS = [
   ['Multi-Role', 'multirole', 'Faculty, Student & L&D'],
 ]
 const demoEnabled = import.meta.env.VITE_ENABLE_DEMO_LOGIN !== 'false'
-const demoPassword = import.meta.env.VITE_DEMO_PASSWORD || 'Password123!'
+const demoPassword = import.meta.env.VITE_DEMO_PASSWORD || 'VLP-Demo-2026!'
 
 export default function LoginPage() {
   const { signIn, signUp, session, loading } = useAuth()
