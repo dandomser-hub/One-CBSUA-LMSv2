@@ -66,6 +66,8 @@ export default function MoocCatalogPage() {
       />
       {loading ? (
         <p>Loading catalog…</p>
+      ) : offerings.length === 0 ? (
+        <p className="text-muted">No courses are available in the public catalog yet. Please check back later.</p>
       ) : (
         <div className="grid md:grid-cols-2 gap-4">
           {offerings
