@@ -1,6 +1,6 @@
 # Source and Evidence Register
 
-Version: 0.1 | Prepared: 14 October 2026 | Status: Supporting evidence for draft Artifacts 0 and 1
+Version: 0.2 | Updated: 14 October 2026 | Status: Supporting evidence and approved decision history for Artifacts 0 and 1
 
 ## Evidence method
 
@@ -75,3 +75,13 @@ M1 pp.15–17 leaves the learning-engine choice open. Supported Moodle integrati
 | Nonfunctional and operating targets | Prevents invented capacity, deadlines and service promises | Workload model, user task baseline, recovery and support objectives | D-16 |
 
 The gaps do not block preparation of these draft artifacts. They constrain final scope approval, architecture selection and implementation claims.
+
+## U4 approved decisions on 14 October 2026
+
+At approximately 23:09 UTC+08, Archi-D approved D-05; specified the current Bolt-connected frontend, backend/data, tooling and infrastructure for D-06/D-07; established UIS/Registrar as the student-record source and HRIS as the employee-record source under D-08; and confirmed that records without ERP connections are locally controlled by VLPv2.
+
+U4 resolves D-09 as financial inquiry/assessment only. VLPv2 does not process payments, collect money, issue payment receipts or provide cashiering/POS. This supersedes the earlier U2 financial wording and the historical open-boundary discussion above. Interface fields and the exact meaning of financial assessment still require specification.
+
+The current repository contains an evolving React/TypeScript prototype and database migrations, as shown by main commit 5af8ee3f015faf3fc4308fc4c7a340170c8f70d6 and its current README. This decision update does not independently certify hosted Postgres version, deployed Edge Functions, dependency versions or production acceptance. The current stack versions in Artifact 0 are user-declared baseline decisions.
+
+Historical evidence gaps concerning legacy source remain relevant for migration and faithful mapping; they no longer require reopening the approved current Bolt implementation choice. D-08 interface contracts and D-10–16 policy/operational details remain unresolved.

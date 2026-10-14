@@ -1,6 +1,6 @@
 # Artifact 0 — Project Charter, Scope, and Decision Register
 
-Version: 0.1 | Prepared: 14 October 2026 | Status: Draft for review  
+Version: 0.2 | Updated: 14 October 2026 | Status: Partial decisions approved; remaining policies under review  
 Project: One-CBSUA Learning Management System v2 (One-CBSUA-LMSv2), also called VLPv2  
 Repository: https://github.com/dandomser-hub/One-CBSUA-LMSv2  
 Requirements authority for this draft: Archi-D, University ICT Director / Lead Systems Architect  
@@ -13,11 +13,11 @@ VLPv2 is a complete, independently functional university learning management sys
 
 **Functional direction: LMS2 baseline + selected Moodle capabilities + CBSUA requirements = VLPv2.**
 
-The repository must ultimately contain the system design and architecture artifacts, complete application source code, database migrations, tests, configuration templates, deployment and operational instructions. The current change creates requirements documentation only; it does not deliver a working application.
+The repository must ultimately contain the system design and architecture artifacts, complete application source code, database migrations, tests, configuration templates, deployment and operational instructions. An evolving application prototype now exists in the repository. This charter records the complete-system target and approved decisions; prototype presence does not establish production readiness or completion of every capability.
 
 The complete system is the target. Controlled increments and an MVP are delivery stages, not an automatic reduction of the final scope. Existing LMS2 features cannot be dropped merely because an earlier report recommended a smaller interface or deferred social/guardian features. Any scope retirement needs an explicit decision with rationale, usage and dependency evidence.
 
-This functional direction does not select a technology stack, require a literal merge of codebases, authorize copying vendor source, or approve a Moodle-backed implementation. Those choices require design evidence.
+The approved current implementation uses the Bolt-connected React/TypeScript and Bolt Database stack recorded below. LMS2 supplies the functional baseline and Moodle supplies selected capability patterns; neither a literal codebase merge nor a Moodle runtime is required by this decision. Vendor source reuse remains subject to permitted access and rights.
 
 ## 2. RPM: result, purpose, massive action plan
 
@@ -25,7 +25,7 @@ This functional direction does not select a technology stack, require a literal 
 
 **Purpose:** Deliver dependable teaching and learning, protect assessment evidence, reduce duplicate institutional records, and support university-wide learning through a coherent experience and accountable record ownership.
 
-**Massive Action Plan:** Reconcile evidence and requirements; approve domain boundaries and capability scope; define workflows and authorization; evaluate the implementation engine; design data and integration contracts; prototype representative journeys; plan increments; implement; validate; deploy; operate and improve.
+**Massive Action Plan:** Reconcile evidence and requirements; approve domain boundaries and capability scope; define workflows and authorization; implement within the approved Bolt stack; design data and integration contracts; prototype representative journeys; plan increments; implement; validate; deploy; operate and improve.
 
 ### Completion measures proposed for approval
 
@@ -52,7 +52,7 @@ These are confirmed user directions, not approval of every proposed matrix row.
 | CR-03 | Build as part of the university ERP while remaining fully functional independently | U2 |
 | CR-04 | Integrate Registrar/SIS to pull and populate student and class lists | U2 |
 | CR-05 | Integrate HRMIS as the employee/faculty list source | U2 |
-| CR-06 | Integrate FMIS for relevant payments, cashiering and POS functionality | U2 |
+| CR-06 | Integrate financial inquiry and assessment information where required; VLPv2 does not process payments or provide cashiering/POS functionality | U2, clarified by U4 |
 | CR-07 | Begin with local authentication and authorization, with eventual university IAM/SSO integration | U2 |
 | CR-08 | Support Academic learners: collegiate, graduate, special and short-term programs | U2 |
 | CR-09 | Support Employee L&D learners as distinct from regular university students | U2 |
@@ -75,9 +75,9 @@ Provide a distinct employee learning context linked to HRMIS employee identity. 
 
 Support university MOOC offerings for distant learners. Proposed workflows include public discovery, registration, self-enrollment or controlled admission, self-paced/cohort delivery, assessment and completion/certification. Free and paid offerings, identity assurance and certificate eligibility require approved policies. The category does not imply unrestricted access to academic or employee records.
 
-### Shared services proposed
+### Shared services approved
 
-One shared learning engine with domain-specific policies is the recommended logical model. Shared services cover identity, scoped roles, learning content, assessments, files, communication, progress, reporting and operations. Domain rules determine enrollment, curriculum metadata, grading, completion, financial conditions and administration.
+One shared learning engine with domain-specific policies is approved under D-05. Shared services cover identity, scoped roles, learning content, assessments, files, communication, progress, reporting and operations. Domain rules determine enrollment, curriculum metadata, grading, completion, financial conditions and administration.
 
 One person may have several memberships and roles, such as faculty, L&D learner and graduate student. Role switching is a candidate interface pattern; regardless of UI, the effective resource context must govern authorization. Cross-domain records must not be combined merely because the person shares an account.
 
@@ -85,13 +85,13 @@ Existing LMS2 guardian requests, news feed, reactions/comments, events, chat, fe
 
 ## 5. System ownership and independent operation
 
-This is a proposed responsibility contract under the confirmed integration directions, not a verified description of existing university APIs.
+Student and employee source ownership and local control of records outside ERP connections are approved under D-08. The remaining field-level contracts and operational rules below require specification; these are not verified descriptions of existing university APIs.
 
 | Data/service | Connected authority | Standalone VLPv2 behavior proposed | Cutover and conflict rule proposed |
 | --- | --- | --- | --- |
-| Student identity and class membership | Registrar/SIS | Authorized local entry or validated import with provenance | Match approved stable identifiers; review conflicts; do not overwrite history |
+| Student identity and class membership | UIS/Registrar for student records; class-list integration retained from CR-04 | Authorized local entry or validated import with provenance | Match approved stable identifiers; review conflicts; do not overwrite history |
 | Terms, subjects, sections and offerings | Academic owner to designate | Local catalog and offering administration | Define field ownership before synchronization |
-| Employee/faculty identity | HRMIS | Authorized local records/import | Link source identities; employment status does not silently erase learning history |
+| Employee/faculty identity | HRIS as the current employee source; HRMIS integration direction retained | Authorized local records/import | Link source identities; employment status does not silently erase learning history |
 | Faculty teaching assignment | Academic scheduling owner, to confirm | Authorized offering assignment | HRMIS identity alone does not grant course teaching access |
 | Employee training enrollment | HR/L&D process, to confirm | L&D administrators manage program cohorts | Separate employment identity from training participation |
 | MOOC identity/enrollment | VLPv2 or designated service, to confirm | Approved external registration/admission | Define linking to institutional identity without email-only merging |
@@ -99,7 +99,8 @@ This is a proposed responsibility contract under the confirmed integration direc
 | Application authorization | VLPv2 under institutional policy | Scoped local roles and memberships | SSO authentication alone must not confer course or administrative rights |
 | Learning content, attempts and feedback | Selected VLPv2 learning implementation | Fully operated locally | One authoritative owner for each assessment and grade |
 | Official academic grades | Registrar-approved process, to confirm | Retain LMS gradebook evidence | Approved export/acknowledgment; avoid automatic official posting |
-| Payments, cashiering and POS | FMIS for its financial responsibilities | Local requirement unresolved; no invented settlement or receipt authority | Define initiation, confirmation, reversals, reconciliation and outage handling |
+| Financial inquiry and assessment | FMIS or designated financial source for authoritative financial status | VLPv2 may support inquiry/assessment; no payment collection, processing, cashiering or POS | Define permitted inquiry fields, assessment meaning and source timestamps; payment execution remains outside VLPv2 |
+| Records without an ERP connection | VLPv2 | Locally controlled by VLPv2 with local administration and history | If later integrated, agree ownership and reconciliation before cutover |
 | Completion and certificates | Domain owner and VLPv2 implementation | Apply approved eligibility and issuing rules | Preserve evidence, versions and revocation history |
 
 ### Integration requirements proposed
@@ -117,12 +118,12 @@ Separate the local user from login identities and domain memberships. Link unive
 ## 6. Boundaries and non-goals of this change
 
 - This draft establishes a reviewable requirements baseline; it does not implement, deploy, migrate or change the live LMS2.
-- It does not select Laravel, Nuxt, Moodle or any database as the final VLPv2 stack.
+- The current approved stack is the Bolt-connected stack below. Production capacity, service levels and any future stack change require separate evidence and decisions.
 - It does not certify the existing system, its physical database or its contractual compliance.
 - It does not assume all Moodle modules belong in VLPv2, or authorize deleting Moodle core/dependencies.
 - It does not replace Registrar/SIS, HRMIS, FMIS or university IAM.
 - AI, blockchain, specialist assessment/content services and other optional tools are not automatically in scope; explicit need and approval are required.
-- Payments/cashiering/POS are required integration concerns, not blanket exclusions. Their exact local and FMIS boundaries are unresolved.
+- Financial scope is inquiry/assessment only. VLPv2 does not collect or process payments and does not implement cashiering or POS.
 
 ## 7. Proposed responsibilities and review groups
 
@@ -132,7 +133,7 @@ Separate the local user from login identities and domain memberships. Link unive
 | Academic learning | Designated academic, Registrar and faculty representatives | Offerings, assessment, grading, attendance and official handoff |
 | Employee L&D | Designated HR/L&D representatives | Training enrollment, competencies and employee learning records |
 | MOOC programs | Designated university program owner | Admission, delivery, completion, certificates and applicable fees |
-| Financial integration | Designated FMIS, accounting/cashiering owners | Financial authority, payment states, POS boundaries and reconciliation |
+| Financial integration | Designated FMIS and financial-process owners | Financial inquiry data, assessment meaning, source authority and reconciliation; payment/cashiering/POS execution outside VLPv2 |
 | Identity and information governance | IAM administrators and designated privacy/security owners | Identity lifecycle, access, retention and disclosure |
 | Operations and support | ICT operations and campus support representatives | Deployment, monitoring, support, recovery and service targets |
 
@@ -146,11 +147,11 @@ These are proposed responsibilities, not appointed signatories or a claim of app
 | D-02 | Confirmed | Independently functional within university ERP | CR-03 |
 | D-03 | Confirmed | Registrar/SIS, HRMIS, FMIS and IAM integration directions | CR-04–07 |
 | D-04 | Confirmed | Academic, Employee L&D and MOOC domains | CR-08–10 |
-| D-05 | Proposed | Shared engine, distinct domain policies and one identity with contextual memberships | Product owner and domain reviewers; prove multi-role isolation |
-| D-06 | Open | Native LMS2 refactor, supported Moodle-backed learning services, or another maintainable implementation | ICT: obtain LMS2 source, reuse rights, manifests, schema and API evidence; compare representative prototypes |
-| D-07 | Open | Final stack, database, deployment and supported version policy | Architecture decision record after D-06 |
-| D-08 | Open | Authoritative fields, identifiers, API availability and synchronization cadence for each ERP link | Registrar/SIS, HRMIS, FMIS, IAM owners |
-| D-09 | Open | Local financial workflows, cashiering/POS scope, fee authority, reversals and outage behavior | Financial and domain owners; resolve before paid enrollment implementation |
+| D-05 | Approved | Shared learning engine, three distinct domain policies and one identity with contextual memberships | Archi-D, U4, 14 October 2026; role isolation still requires validation |
+| D-06 | Approved current implementation | Continue the Bolt-connected React/TypeScript + Bolt Database implementation; LMS2/Moodle are functional references | Archi-D, U4; no requirement for Moodle-backed runtime or copying vendor code |
+| D-07 | Approved current stack | Frontend, backend/data, tooling and infrastructure listed in the approved stack section | Archi-D, U4; production sizing and operating targets remain D-16 |
+| D-08 | Ownership approved; contracts pending | Pull student records from UIS/Registrar and employee records from HRIS; records without other ERP connections are locally controlled by VLPv2 | Archi-D, U4; identifiers, field mappings, APIs, cadence and conflict rules remain to specify |
+| D-09 | Boundary resolved; inquiry details pending | VLPv2 is a financial inquiry/assessment tool only; no payment processing, cashiering or POS | Archi-D, U4; inquiry fields and financial assessment workflow need definition |
 | D-10 | Open | IAM protocol, identity linking, external MOOC accounts, MFA and local-login coexistence | IAM and ICT owners |
 | D-11 | Open | Academic grading, rounding, retakes, extensions, accommodations and official grade handoff | Academic/Registrar owners |
 | D-12 | Open | L&D nomination, competencies, hours/credits and completion reporting | HR/L&D owners |
@@ -161,14 +162,37 @@ These are proposed responsibilities, not appointed signatories or a claim of app
 | D-17 | Proposed | Optional Moodle capabilities require usage evidence and a maintained support owner | Capability review; see Artifact 1 |
 | D-18 | Confirmed | Draft documentation branch and pull request; detailed scope still subject to review | CR-11 |
 
+## Approved current implementation stack
+
+Approved by Archi-D on 14 October 2026 (U4). Versions below are the user-declared current baseline, not a fresh deployment inventory or a promise of production support duration.
+
+| Layer | Approved current technologies |
+| --- | --- |
+| Frontend | React 18; React Router DOM 6; TypeScript 5.6; Tailwind CSS 3.4; Lucide React |
+| Backend and data | Bolt Database: Postgres, Auth and Edge Functions; Bolt Database JS SDK 2 |
+| Build and tooling | Vite 5; Vitest 3 for UI tests; Node.js native test runner for database tests; PGlite for in-memory Postgres tests; Prettier |
+| Infrastructure | Bolt Database hosted Postgres 17; Bolt Database Auth email/password authentication; Bolt Database Edge Functions on Deno |
+
+The repository currently uses Supabase-named SDK/configuration paths. Preserve those implementation identifiers while documenting Bolt Database as the selected platform; this approval does not authorize renaming environment variables or migrating services.
+
+Local-first authentication means VLPv2's own email/password accounts through Bolt Database Auth, independently of university IAM. It does not imply offline login or a self-hosted authentication server. University IAM/SSO integration remains required under D-10.
+
+## Decision authority and remaining detail
+
+U4 is Archi-D's decision message of 14 October 2026 at approximately 23:09 UTC+08 in the VLPv2 conversation. It approves D-05, specifies the current D-06/D-07 Bolt stack, establishes the D-08 ownership principle, and narrows D-09 to financial inquiry/assessment only.
+
+D-08 is resolved at the ownership-principle level. External system identifiers, class-list field ownership, faculty assignments, APIs, synchronization schedules and exception rules still require interface specifications. Locally controlled records remain the VLPv2 authority unless a later integration decision explicitly changes ownership.
+
+D-09 is resolved at the financial-boundary level. The exact meaning and fields of financial inquiry/assessment remain to be specified. No payment initiation, collection, gateway, cashiering, POS, receipt issuance or settlement workflow is authorized inside VLPv2.
+
 ## 9. Risks and dependencies
 
 | Risk | Impact | Next action |
 | --- | --- | --- |
-| LMS2 source, schema and reuse rights unverified | Cannot yet promise a literal code refactor or estimate implementation effort | Obtain permitted source/manifests and schema-only evidence |
+| LMS2 source, schema and reuse rights unverified | Limits exact legacy mapping, reuse and migration assessment | Continue the approved native Bolt implementation; obtain permitted legacy evidence where needed for migration or fidelity |
 | Interface observations mistaken for tested functions | False confidence in assessment and authorization behavior | Controlled faculty/student/guardian tests; preserve observed versus verified distinction |
 | Three domains modeled as one student category | Incorrect access, enrollment and reporting | Validate separate domain journeys and multi-membership scenarios |
-| Payment scope left implicit | Conflicting receipts, access grants or accounting records | Resolve D-09 with FMIS owners before financial implementation |
+| Financial inquiry data is stale or assessment meaning is unclear | Incorrect advice or learning-access decisions | Define financial inquiry/assessment contract; show source and freshness; keep all payment execution outside VLPv2 |
 | Duplicate master data and grade ownership | Drift and incorrect institutional reports | Agree contracts and one owner for each record/field |
 | Historical Moodle simplification applied without inventory | Loss of content/dependencies or university-required features | Approve dispositions against content and requirements inventory |
 | Nonfunctional targets or staffing absent | Unreliable capacity and delivery estimates | Set targets from representative workloads and operational capacity |
@@ -192,10 +216,12 @@ These are proposed responsibilities, not appointed signatories or a claim of app
 
 Review Artifact 1 in five groups: shared foundation; Academic; Employee L&D; MOOC; cross-cutting/integrations. Confirm, amend or defer proposed rows explicitly. Maintain requirement IDs through future workflow, schema, issue, code and test references.
 
-Approval to prepare a draft is not blanket approval of its recommendations. This pull request remains a draft until reviewed. Record approved changes in this register with date, authority and rationale; a capability deferred from an increment remains visible in the complete-system scope.
+D-05, the current D-06/D-07 implementation baseline, D-08 ownership principles and D-09 financial boundary are approved by Archi-D. Other proposals and policies remain under review. Repository integration does not itself approve unresolved university policies. Record approved changes in this register with date, authority and rationale; a capability deferred from an increment remains visible in the complete-system scope.
 
 ### Revision history
 
 | Version | Date | Change | Approval |
 | --- | --- | --- | --- |
 | 0.1 | 2026-10-14 | Initial charter reconciled with recovered assessments and current user directions | Pending review |
+
+| 0.2 | 2026-10-14 | Record U4 approvals for D-05–09; specify current Bolt stack, ERP ownership and inquiry-only financial boundary; update prototype status | Decisions listed approved; remaining scope/policy review continues |
