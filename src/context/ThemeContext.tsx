@@ -6,9 +6,9 @@ export const validTheme = (value: unknown): value is ThemePreference =>
 function readPreference(): ThemePreference {
   try {
     const value = localStorage.getItem(THEME_KEY)
-    return validTheme(value) ? value : 'system'
+    return validTheme(value) ? value : 'light'
   } catch {
-    return 'system'
+    return 'light'
   }
 }
 export function applyTheme(value: ThemePreference) {
@@ -18,7 +18,7 @@ export function applyTheme(value: ThemePreference) {
 const ThemeContext = createContext<{
   theme: ThemePreference
   setTheme: (value: ThemePreference) => void
-}>({ theme: 'system', setTheme: () => {} })
+}>({ theme: 'light', setTheme: () => {} })
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setPreference] = useState<ThemePreference>(readPreference)
   function setTheme(value: ThemePreference) {

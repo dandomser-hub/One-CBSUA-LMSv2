@@ -66,3 +66,17 @@ Accounts must exist in the connected database; shortcuts do not create accounts
 or grant roles. If seeded with a different `VLP_DEMO_PASSWORD`, use the manual
 sign-in form. Set `VITE_ENABLE_DEMO_LOGIN=false` at build time to hide these
 synthetic account shortcuts for a live deployment.
+
+### Repairing the public catalog on an existing deployment
+
+If Browse the public catalog reports that `public_mooc_catalog` is missing from
+the schema cache, apply pending migrations to the connected Supabase project.
+For a targeted catalog repair, run
+`supabase/migrations/20261014130000_006_restore_public_catalog.sql` in that
+project's SQL Editor. It restores the zero-argument function, grants execution
+to visitors and signed-in users, and requests a PostgREST schema-cache reload.
+It does not grant public access to the underlying tables. Deploying frontend
+code alone does not apply this database repair.
+
+The single theme dropdown defaults to Light when no valid preference is saved.
+Existing saved Light, Dark or System preferences remain respected.

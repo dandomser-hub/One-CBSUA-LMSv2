@@ -249,4 +249,22 @@ test('migrations, RLS isolation and transactional learning workflows', async (t)
       )
     },
   )
+  await t.test('catalog repair restores a missing RPC and is safe to reapply', async () => {
+    await owner()
+    await db.exec('DROP FUNCTION public.public_mooc_catalog()')
+    const repair = await readFile(
+      'supabase/migrations/20261014130000_006_restore_public_catalog.sql',
+      'utf8',
+    )
+    await db.exec(repair)
+    await db.exec(repair)
+    await as(null)
+    assert.deepEqual((await rows('SELECT * FROM public_mooc_catalog()')).map((x) => x.id).sort(), [
+      id(12),
+      id(13),
+    ])
+    await denied('SELECT * FROM public.offerings')
+    await as(3)
+    assert.equal((await rows('SELECT * FROM public_mooc_catalog()')).length, 2)
+  })
 })

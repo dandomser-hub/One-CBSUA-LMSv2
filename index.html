@@ -1,12 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <script>
       // Apply a saved choice before first paint; no attribute follows OS changes through CSS.
       try {
         var theme = localStorage.getItem('vlpv2:theme')
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme
+        if (theme === 'system') document.documentElement.removeAttribute('data-theme')
+        else if (theme === 'light' || theme === 'dark')
+          document.documentElement.dataset.theme = theme
       } catch (_) {}
     </script>
 

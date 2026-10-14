@@ -25,7 +25,9 @@ it('persists explicit themes and restores the system-controlled selector', () =>
       <ThemeSelector />
     </ThemeProvider>,
   )
-  fireEvent.click(screen.getByRole('button', { name: 'Dark' }))
+  fireEvent.change(screen.getByRole('combobox', { name: 'Color theme' }), {
+    target: { value: 'dark' },
+  })
   expect(document.documentElement.dataset.theme).toBe('dark')
   expect(localStorage.getItem(THEME_KEY)).toBe('dark')
   view.unmount()
@@ -34,10 +36,16 @@ it('persists explicit themes and restores the system-controlled selector', () =>
       <ThemeSelector />
     </ThemeProvider>,
   )
-  expect(screen.getByRole('button', { name: 'Dark' }).getAttribute('aria-pressed')).toBe('true')
-  fireEvent.click(screen.getByRole('button', { name: 'Light' }))
+  expect((screen.getByRole('combobox', { name: 'Color theme' }) as HTMLSelectElement).value).toBe(
+    'dark',
+  )
+  fireEvent.change(screen.getByRole('combobox', { name: 'Color theme' }), {
+    target: { value: 'light' },
+  })
   expect(document.documentElement.dataset.theme).toBe('light')
-  fireEvent.click(screen.getByRole('button', { name: 'System' }))
+  fireEvent.change(screen.getByRole('combobox', { name: 'Color theme' }), {
+    target: { value: 'system' },
+  })
   expect(document.documentElement.hasAttribute('data-theme')).toBe(false)
   expect(localStorage.getItem(THEME_KEY)).toBe('system')
 })
@@ -51,13 +59,17 @@ it('carries the landing preference into the shared module header', () => {
     </ThemeProvider>,
   )
   expect(screen.getByRole('heading', { name: 'One-CBSUA VLP' })).toBeTruthy()
-  fireEvent.click(screen.getByRole('button', { name: 'Dark' }))
+  fireEvent.change(screen.getByRole('combobox', { name: 'Color theme' }), {
+    target: { value: 'dark' },
+  })
   view.rerender(
     <ThemeProvider>
       <Header />
     </ThemeProvider>,
   )
-  expect(screen.getByRole('button', { name: 'Dark' }).getAttribute('aria-pressed')).toBe('true')
+  expect((screen.getByRole('combobox', { name: 'Color theme' }) as HTMLSelectElement).value).toBe(
+    'dark',
+  )
   expect(document.documentElement.dataset.theme).toBe('dark')
 })
 
@@ -85,4 +97,16 @@ it('follows preference changes from another tab', () => {
   localStorage.setItem(THEME_KEY, 'dark')
   fireEvent(window, new StorageEvent('storage', { key: THEME_KEY, newValue: 'dark' }))
   expect(document.documentElement.dataset.theme).toBe('dark')
+})
+
+it('defaults to Light when there is no saved preference', () => {
+  render(
+    <ThemeProvider>
+      <ThemeSelector />
+    </ThemeProvider>,
+  )
+  expect(document.documentElement.dataset.theme).toBe('light')
+  expect((screen.getByRole('combobox', { name: 'Color theme' }) as HTMLSelectElement).value).toBe(
+    'light',
+  )
 })
