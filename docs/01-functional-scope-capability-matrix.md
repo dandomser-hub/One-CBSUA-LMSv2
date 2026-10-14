@@ -1,11 +1,11 @@
 # Artifact 1 — Functional Scope and Capability Matrix
 
-Version: 0.1 | Prepared: 14 October 2026 | Status: Draft for review  
+Version: 0.2 | Updated: 14 October 2026 | Status: Capability draft aligned with approved D-05–09 decisions  
 Companion: [Artifact 0](00-project-charter-scope-decision-register.md) | [Evidence register](02-source-and-evidence-register.md)
 
 ## Reading this matrix
 
-This is a proposed complete-system capability inventory, not a completed application, approved release backlog or claim that every function is already present in LMS2. CR identifiers and D decision identifiers are defined in Artifact 0.
+This is a complete-system capability inventory under review. D-05–09 approvals establish the shared platform model, current Bolt stack, record-ownership principles and inquiry-only financial boundary. Other detailed capability proposals remain subject to review; prototype implementation does not establish complete acceptance. CR identifiers and D decision identifiers are defined in Artifact 0.
 
 Evidence labels: **C** = confirmed user requirement; **O** = interface observation documented in the recovered LMS2 report; **R** = recommendation or source finding documented in the recovered Moodle/LMS2 reports; **P** = new design proposal. Combinations separate the required direction from its proposed detail. All acceptance criteria below are proposed and unexecuted.
 
@@ -20,7 +20,7 @@ Each group contains a provenance/disposition table followed by the corresponding
 | FND-01 | Organization and offering context | C/P | U2; L1 pp.3–5 | Retain/enhance | Shared / organization |
 | FND-02 | Local accounts and recovery | C | U2; L1 pp.2,4 | Required | Shared / identity |
 | FND-03 | Contextual authorization | C/P | U2; L1 pp.2,4; M1 pp.3–4 | Required/enhance | Shared / access |
-| FND-04 | Multi-domain person and memberships | P | U2; design proposal | Adopt proposal | Shared / identity |
+| FND-04 | Multi-domain person and memberships | C | U4; D-05 approved | Approved model | Shared / identity |
 | FND-05 | Profiles and user directory | O/P | L1 pp.4,10–11 | Retain/enhance | Shared / users |
 | FND-06 | Activity taxonomy and presets | O/R | L1 pp.3–4; M1 pp.12–13 | Retain/adapt | Shared / configuration |
 | FND-07 | Role dashboards and workflow status | R | L1 pp.10–11; M1 p.13 | Enhance proposal | Shared / experience |
@@ -127,7 +127,7 @@ Each group contains a provenance/disposition table followed by the corresponding
 | MOC-02 | Public catalog and external registration | P | U2; design proposal | Propose | MOOC / discovery and identity |
 | MOC-03 | Admission, pacing and enrollment | P | U2; design proposal | Propose | MOOC / enrollment |
 | MOC-04 | Completion and certificates | P | U2; design proposal | Propose | MOOC / credentials |
-| MOC-05 | Free/paid offerings and access | C/P | U2; supersedes blanket M1 commerce deferral | Required boundary; workflow proposed | MOOC / financial enrollment |
+| MOC-05 | Financial inquiry for applicable offerings | C/P | U4; D-09 resolved | Inquiry/assessment only | MOOC / financial information |
 
 | ID | CBSUA adaptation / target behavior | Acceptance criteria proposed | Decision dependencies |
 | --- | --- | --- | --- |
@@ -135,15 +135,15 @@ Each group contains a provenance/disposition table followed by the corresponding
 | MOC-02 | Public descriptions, registration, account verification and privacy choices | Published catalog is discoverable; registration creates no institutional role; duplicate identity conflicts enter controlled review | D-10, D-13 |
 | MOC-03 | Self-enrollment or approval; self-paced or cohort runs; capacity/prerequisite controls where needed | Only eligible learners enroll; cohort dates and self-paced rules remain distinct and enforceable | D-13 |
 | MOC-04 | Approved assessment/identity criteria, certificate templates, verification and revocation | A certificate is issued only after criteria pass; verification reveals only approved fields; revoked credentials show their status | D-13, D-15 |
-| MOC-05 | Support applicable FMIS payment workflows without assuming all MOOCs are paid | Free offerings require no payment; paid access follows authoritative financial status and approved reversal policy | D-09, D-13 |
+| MOC-05 | Show authorized financial inquiry/assessment information for applicable offerings; payment execution stays outside VLPv2 | Free offerings require no payment workflow; financial inquiry shows source and freshness; VLPv2 never collects or processes payment | D-09, D-13 |
 
 ## ERP integrations and operations
 
 | ID | Capability | Evidence | Source | Treatment | Intended module |
 | --- | --- | --- | --- | --- | --- |
 | INT-01 | Registrar/SIS integration | C/P | U2; M1 pp.14,16 | Required | Integration / academic adapter |
-| INT-02 | HRMIS integration | C/P | U2 | Required | Integration / HR adapter |
-| INT-03 | FMIS payments, cashiering and POS | C/P | U2 | Required; exact scope open | Integration / finance adapter |
+| INT-02 | HRIS employee source and HRMIS integration direction | C/P | U2, U4 | Ownership approved; contract pending | Integration / HR adapter |
+| INT-03 | FMIS financial inquiry and assessment | C/P | U4 | Boundary approved; inquiry contract pending | Integration / financial inquiry adapter |
 | INT-04 | University IAM/SSO transition | C/P | U2; L1 p.2 | Required | Integration / identity adapter |
 | INT-05 | Integration monitor and resilience | R/P | M1 pp.16,18 | Adopt proposal | Integration / operations |
 | OPS-01 | Private files and uploads | R | L1 pp.2,9; M1 pp.4,18 | Adopt mandatory proposal | Operations / file services |
@@ -157,7 +157,7 @@ Each group contains a provenance/disposition table followed by the corresponding
 | --- | --- | --- | --- |
 | INT-01 | Pull student and class lists; stable identifiers, change history, withdrawals, errors and reconciliation | Replay an import and process a withdrawal: no duplicate class/member; access changes while historical work remains | D-08; ACD-02 |
 | INT-02 | Employee/faculty provisioning; proposed L&D completion handoff separately agreed | Repeated source updates map to one person; an employment change follows policy without deleting history; rejected records are visible | D-08; LND-01 |
-| INT-03 | Define charge initiation, authoritative confirmation, receipts, reversals, cashier/POS interfaces and reconciliation | Test confirmed, pending, failed, duplicated and reversed transactions under the agreed contract; one payment cannot duplicate access or receipts | D-09 |
+| INT-03 | Consume permitted financial information for inquiry/assessment; no payment initiation, collection, processing, cashiering or POS | Inquiry is scoped and records source/freshness; unavailable financial data is shown explicitly; no VLPv2 operation executes a payment or issues a receipt | D-09 |
 | INT-04 | Local-first operation, verified identity linking, provisioning/revocation and external learner policy | A linked user retains courses and learning history; invalid identity assertions and unauthorized auto-linking fail; suspension follows policy | D-10; FND-02–04 |
 | INT-05 | Runs, rejected records, source timestamps, retries, ownership conflicts and replay controls | Partial failure can be replayed without duplication; administrators reconcile expected/accepted/rejected counts and stale source state | D-08–10 |
 | OPS-01 | Authorized delivery, validation, quotas, content inspection and retention | Unauthorized downloads fail even with known URLs; disallowed uploads are rejected; restored files match recorded checksums | D-15 |
@@ -169,7 +169,7 @@ Each group contains a provenance/disposition table followed by the corresponding
 
 ## Optional Moodle capabilities and dependency policy
 
-These recommendations come from M1 pp.9–12 and 17 and remain subject to actual course inventory, domain needs and owner approval. They describe capabilities; they do not require deploying Moodle plugins. If Moodle is selected, retain its supported dependency and upgrade mechanisms.
+These recommendations come from M1 pp.9–12 and 17 and remain subject to actual course inventory, domain needs and owner approval. They describe capabilities implemented through the approved Bolt stack; they do not require deploying Moodle plugins. Any later proposal to add a Moodle runtime requires a new architecture decision.
 
 | Capability family | Proposed disposition | Required evidence before enablement or retirement |
 | --- | --- | --- |
@@ -184,7 +184,7 @@ These recommendations come from M1 pp.9–12 and 17 and remain subject to actual
 | Badges, learning plans and competency extensions | Reassess by domain | L&D and MOOC requirements may justify capabilities previously deferred for ordinary instruction |
 | AI providers/placements and predictive analytics | Not in initial proposed scope | Separate institutional decision and demonstrated need; do not infer authorization from availability |
 | Extra identity providers, repositories, portfolios and SMS/push services | Enable only for an approved integration | Owner, operating cost, data contract and support plan |
-| Payment gateways and paid enrollment | FMIS-first boundary decision | D-09; earlier blanket commerce disablement does not settle VLPv2 financial requirements |
+| Payment gateways, payment processing, cashiering and POS | Outside VLPv2 | U4/D-09: financial inquiry/assessment only; paid-course policy does not authorize payment execution |
 | Core authorization, question/grade history, private files, jobs, backup, privacy and migration support | Preserve necessary responsibilities | Never remove merely to reduce visible feature count; implementation depends on selected engine |
 | Compatibility handlers and plugin dependencies | Preserve where needed | Existing content and declared/runtime dependencies; tested migration before removal |
 
@@ -206,12 +206,12 @@ The recovered L1 findings are historical review observations, not current live d
 
 | Charter requirement | Capability coverage |
 | --- | --- |
-| CR-01 Artifacts and complete code | Documentation now; implementation, migrations, tests and runbooks remain future outputs under OPS-03–06 |
+| CR-01 Artifacts and complete code | Artifacts and evolving prototype exist; complete implementation and validation remain tracked under OPS-03–06 |
 | CR-02 LMS2 baseline plus Moodle enhancements | FND-05–08; LRN-01–19; ACD-01–05; optional capability policy |
 | CR-03 Independent ERP component | FND-01–04; ACD-02; LND-01–03; MOC-01–03; INT-01–05; standalone contract in Artifact 0 |
 | CR-04 Registrar/SIS | ACD-02, INT-01 |
 | CR-05 HRMIS | ACD-03, LND-01, INT-02 |
-| CR-06 FMIS | MOC-05, INT-03; applicability to paid offerings in any domain must be determined |
+| CR-06 FMIS financial inquiry/assessment | MOC-05, INT-03; payment processing and cashiering/POS excluded under U4/D-09 |
 | CR-07 Local authentication and eventual SSO | FND-02–04, INT-04 |
 | CR-08 Academic learners | ACD-01–05 plus shared learning engine |
 | CR-09 Employee L&D learners | LND-01–05 plus shared learning engine |
@@ -228,10 +228,12 @@ The recovered L1 findings are historical review observations, not current live d
 
 For each row record **approve**, **amend**, **defer to a named increment**, or **exclude with rationale** in a later revision. Proposed exclusions must be checked against actual content and institutional requirements. Deferment from a release does not remove a capability from complete-system planning.
 
-Before implementation, expand approved rows into workflows, role/permission rules, data definitions, exceptional paths and test fixtures. Reference capability IDs in architecture decisions, issues, pull requests and validation results. All 53 entries currently have an acceptance statement; none is marked implemented or tested.
+Before implementation, expand approved rows into workflows, role/permission rules, data definitions, exceptional paths and test fixtures. Reference capability IDs in architecture decisions, issues, pull requests and validation results. All 53 entries have an acceptance statement. This matrix has not yet reconciled each entry to prototype code and test evidence; an unmarked row must not be interpreted as proof that no prototype implementation exists.
 
 ### Revision history
 
 | Version | Date | Change | Approval |
 | --- | --- | --- | --- |
 | 0.1 | 2026-10-14 | Initial 53-capability inventory and evidence reconciliation | Pending review |
+
+| 0.2 | 2026-10-14 | Align shared identity model, approved Bolt stack, UIS/HRIS ownership and financial inquiry-only boundary with U4 | D-05–09 approved as specified; remaining detailed capabilities under review |
